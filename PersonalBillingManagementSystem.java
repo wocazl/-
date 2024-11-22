@@ -42,6 +42,12 @@ public class PersonalBillingManagementSystem {
                     recordExpense();
                     break;
                 case 3:
+                    viewAllBills();
+                    break;
+                case 4:
+                    queryBill();
+                    break;
+                case 5:
                     running = false;
                     System.out.println("系统已退出。");
                     break;
@@ -59,7 +65,9 @@ public class PersonalBillingManagementSystem {
         System.out.println("请选择操作：");
         System.out.println("1. 记录收入");
         System.out.println("2. 记录支出");
-        System.out.println("3. 退出系统");
+        System.out.println("3. 查看所有账单");
+        System.out.println("4. 查询账单");
+        System.out.println("5. 退出系统");
         System.out.print("请输入选项序号：");
     }
 
@@ -145,6 +153,48 @@ public class PersonalBillingManagementSystem {
     private static void promptReturnToMenu() {
         System.out.println("按任意键返回主菜单...");
         scanner.nextLine();
+    }
+
+    // 查看所有账单
+    private static void viewAllBills() {
+        System.out.println("=================================");
+        System.out.println("所有账单：");
+        System.out.println("收入：");
+        for (Transaction income : incomeList) {
+            System.out.println(income);
+        }
+        System.out.println("支出：");
+        for (Transaction expense : expenseList) {
+            System.out.println(expense);
+        }
+        promptReturnToMenu();
+    }
+
+    // 查询账单
+    private static void queryBill() {
+        System.out.print("请输入要查询的日期（YYYY-MM-DD）：");
+        String date = scanner.nextLine();
+        System.out.println("查询结果：");
+        boolean found = false;
+
+        for (Transaction income : incomeList) {
+            if (income.date.equals(date)) {
+                System.out.println("收入: " + income);
+                found = true;
+            }
+        }
+
+        for (Transaction expense : expenseList) {
+            if (expense.date.equals(date)) {
+                System.out.println("支出: " + expense);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("没有找到该日期的账单。");
+        }
+        promptReturnToMenu();
     }
 }
 
